@@ -1,4 +1,5 @@
 import React from 'react';
+
 import SignUp from './component/Signup';
 import Login from './component/Login'
 
@@ -7,6 +8,7 @@ const App = () => {
     <div>
       <SignUp />
       <Login />
+
     </div>
   );
 };
