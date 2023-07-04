@@ -1,10 +1,14 @@
 import React from 'react';
-import SignUp from './SignUp';
+
+import SignUp from './component/Signup';
+import Login from './component/Login'
 
 const App = () => {
   return (
     <div>
       <SignUp />
+      <Login />
+
     </div>
   );
 };
