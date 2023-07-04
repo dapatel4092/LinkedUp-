@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
-
+// using jwt for password encryption
 const secret = 'secretcode123';
 const expiration = '2h';
 
+//middleware function to be used in server file
 module.exports = {
   authMiddleware: function ({ req }) {
     let token = req.body.token || req.query.token || req.headers.authorization;
