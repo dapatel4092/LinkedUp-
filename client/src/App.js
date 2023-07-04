@@ -1,11 +1,13 @@
 import React from 'react';
+import SignUp from './SignUp';
 
-function App() {
+const App = () => {
   return (
-  <div>
-    <h1>Test</h1>
-  </div>
+    <div>
+      <SignUp />
+    </div>
   );
-}
+};
 
 export default App;
+
