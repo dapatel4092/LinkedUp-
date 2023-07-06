@@ -15,12 +15,19 @@ const typeDefs = gql`
   }
 
   type Game {
-    _id: ID
     title: String
     competitive: Boolean
     rank: String
     console: String
     gamingUsername: String
+  }
+
+  type Post {
+    _id: ID
+    content: String
+    createdAt: String
+    user: User
+    game: String
   }
 
   type Auth {
@@ -32,12 +39,14 @@ const typeDefs = gql`
     users: [User]
     user(userId: ID): User
     usersByGame(gameTitle: String): [User]
+    postsByGame(game: String): [Post]
   }
 
   type Mutation {
     addUser(username: String, email: String, password: String): Auth
     login(email: String, password: String): Auth
     addGameToProfile(userId: ID, game: GameInput): User
+    addPost(content: String, userId: ID, game: String): Post
   }
 
   input GameInput {
