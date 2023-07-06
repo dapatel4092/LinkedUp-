@@ -1,47 +1,85 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Profile} = require('../models');
+const { User, Profile, Game } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
-    // queries for our data
-    Query: {
-    // will return all users with the 'profile' populated
-        users: async () => {
-            return User.find().populate('profile');
-      },
-    // will return a single user, searching by id
-        user: async (parent, { userId }) => {
-         return User.findById(userId).populate('profile');
-      },
+  Query: {
+    users: async () => {
+      return User.find().populate({
+        path: 'profile',
+        populate: {
+          path: 'games',
+        },
+      });
+    },
+    user: async (parent, { userId }) => {
+      return User.findById(userId).populate({
+        path: 'profile',
+        populate: {
+          path: 'games',
+        },
+      });
+    },
+    usersByGame: async (parent, { gameTitle }) => {
+      // Find all profiles with the game in their games array
+      const profiles = await Profile.find({ "games.title": gameTitle });
+      // Get the IDs of those profiles
+      const profileIds = profiles.map(profile => profile._id);
+      // Find all users with those profiles
+      const users = await User.find({ profile: { $in: profileIds } });
+  
+      return users;
+    },
+  },
+
+  Mutation: {
+    addUser: async (parent, { username, email, password }) => {
+      const user = await User.create({ username, email, password });
+      
+      // Create a new Profile for the User
+      const profile = await Profile.create({ bio: "", games: [] });
+      
+      // Attach the Profile to the User
+      user.profile.push(profile);
+      await user.save();
+      
+      const token = signToken(user);
+      return { token, user };
     },
 
-    Mutation: {
-        // Mutation for adding a new user
-        // takes in the args of username, email, and password
-        // uses our signToken method from our JWT auth file
-        addUser: async (parent, { username, email, password }) => {
-            const user = await User.create({ username, email, password });
-            const token = signToken(user);
-            return { token, user };
-          },
-        // Mutation to login to the application
-        // takes in email and password as args
-        login: async (parent, { email, password }) => {
-        //function to find if a user email exists.
-          const user = await User.findOne({ email });
-        //error if no email found
-          if (!user) {
-            throw new AuthenticationError('Incorrect credentials');
-          }
-          //using the isCorrectPassword method from our user model
-          const correctPw = await user.isCorrectPassword(password);
-          
-          if (!correctPw) {
-            throw new AuthenticationError('Incorrect credentials');
-          }
-          
-          const token = signToken(user);
-          return { token, user };
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+      
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+      
+      const token = signToken(user);
+      return { token, user };
+    },
+
+    addGameToProfile: async (parent, { userId, game }) => {
+      const newGame = await Game.create(game);
+      const user = await User.findById(userId);
+      const profile = await Profile.findById(user.profile);
+      
+      profile.games.push(newGame);
+      await profile.save();
+
+      return User.findById(userId).populate({
+        path: 'profile',
+        populate: {
+          path: 'games',
         },
-    } 
+      });
+    },
+  },
 }
+
+module.exports = resolvers;
