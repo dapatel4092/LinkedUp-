@@ -15,6 +15,7 @@ const typeDefs = gql`
   }
 
   type Game {
+    _id: ID
     title: String
     competitive: Boolean
     rank: String
@@ -29,16 +30,23 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
-    user(userId: ID!): User
-    profiles(userId: ID, name: String): [Profile]
+    user(userId: ID): User
+    usersByGame(gameTitle: String): [User]
   }
 
   type Mutation {
-    login(email: String!, password: String!): Auth
-    addUser(username: String!, email: String!, password: String!): Auth
-    addProfile(userId: ID!, bio: String, games: [GameInput]): User
+    addUser(username: String, email: String, password: String): Auth
+    login(email: String, password: String): Auth
+    addGameToProfile(userId: ID, game: GameInput): User
   }
-  `;
 
+  input GameInput {
+    title: String
+    competitive: Boolean
+    rank: String
+    console: String
+    gamingUsername: String
+  }
+`;
 
-module.exports = typeDefs
+module.exports = typeDefs;
