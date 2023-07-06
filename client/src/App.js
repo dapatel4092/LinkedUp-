@@ -1,13 +1,11 @@
 import React from 'react';
 
-import SignUp from './component/Signup';
-import Login from './component/Login'
+import Gameselection from '../component/Gameselection';
 
 const App = () => {
   return (
     <div>
-      <SignUp />
-      <Login />
+    <Gameselection></Gameselection>
 
     </div>
   );
