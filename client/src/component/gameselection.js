@@ -1,5 +1,5 @@
 import { useState } from "react";
-import GamesData from "./projects.json";
+import GamesData from "./Games.json";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
