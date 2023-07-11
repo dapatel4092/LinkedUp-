@@ -12,7 +12,7 @@ const typeDefs = gql`
     _id: ID
     bio: String
     games: [Game]
-    socialMediaLinks: [String]
+    socialMediaLinks: [SocialMedia]
   }
 
   type Game {
@@ -21,6 +21,13 @@ const typeDefs = gql`
     rank: String
     console: String
     gamingUsername: String
+  }
+
+  type SocialMedia {
+    facebook: String
+    twitter: String
+    instagram: String
+    snapchat: String
   }
 
   type Post {
@@ -49,6 +56,7 @@ const typeDefs = gql`
     addProfile(userId: ID!, profileInput: ProfileInput!): User
     login(email: String, password: String): Auth
     addGameToProfile(userId: ID, game: GameInput): User
+    addSocialMediaLinks(userId: ID!, socialMedia: SocialMediaInput!): User
     addPost(content: String, userId: ID, game: String): Post
   }
 
