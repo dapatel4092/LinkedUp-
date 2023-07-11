@@ -3,32 +3,28 @@
         "id":1,
         "title":"Apex Legends",
         "description":"this is the array used for screenshots for the projects i worked on",
-        "github":"",
-        "live":"",
+        "Connect":"",
         "image":"images/apex-featured-image-16x9.jpg.adapt.crop16x9.1023w.jpg"
     },
     {
         "id":2,
         "title":"Call of Duty",
         "description":"lotrem",
-        "github":"",
-        "live":"",
+        "Connect":"",
         "image":"images/cod.jpg"
     },
     {
         "id":3,
         "title":"Fortnite",
         "description":"lotrem",
-        "github":"",
-        "live":"",
+        "Connect":"",
         "image":"images/fornite.jpg"
     },
     {
         "id":4,
         "title":"Counter-Strike: Global Offensive",
         "description":"lotrem",
-        "github":"",
-        "live":"",
+        "Connect":"",
         "image":"images/csgo.jpg"
     }
     
