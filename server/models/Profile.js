@@ -31,11 +31,11 @@ const profileSchema = new Schema({
             rank: {
                 type: String,
             }, 
-            consoles: [{
+            console: {
                 type: String,
                 required: true,
                 trim: true
-            }],
+            },
             gamingUsername: {
                 type: String,
                 required: true,

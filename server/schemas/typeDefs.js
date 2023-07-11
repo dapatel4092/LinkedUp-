@@ -5,22 +5,29 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
-    profile: Profile
+    bio: String
+    socialMediaLinks: [SocialMedia]
+    games: [UserGame]
   }
 
-  type Profile {
-    _id: ID
-    bio: String
-    games: [Game]
-    socialMediaLinks: [SocialMedia]
+  type SocialMedia {
+    facebook: String
+    twitter: String
+    instagram: String
+    snapchat: String
+  }
+
+  type UserGame {
+    game: Game
+    console: String
+    gamingUsername: String
+    competitive: Boolean
+    rank: String
   }
 
   type Game {
+    _id: ID
     title: String
-    competitive: Boolean
-    rank: String
-    console: String
-    gamingUsername: String
   }
 
   type SocialMedia {
@@ -35,7 +42,7 @@ const typeDefs = gql`
     content: String
     createdAt: String
     user: User
-    game: String
+    game: Game
   }
 
   type Auth {
@@ -47,33 +54,30 @@ const typeDefs = gql`
     me: User
     users: [User]
     user(userId: ID): User
-    usersByGame(gameTitle: String): [User]
-    postsByGame(game: String): [Post]
+    usersByGame(gameId: ID): [User]
+    postsByGame(gameId: ID): [Post]
   }
 
   type Mutation {
     addUser(username: String, email: String, password: String): Auth
-    addProfile(userId: ID!, profileInput: ProfileInput!): User
+    updateProfile(userId: ID!, profileInput: ProfileInput!): User
     login(email: String, password: String): Auth
-    addGameToProfile(userId: ID, game: GameInput): User
-    addSocialMediaLinks(userId: ID!, socialMedia: SocialMediaInput!): User
-    addPost(content: String, userId: ID, game: String): Post
+    addGameToProfile(userId: ID, userGame: UserGameInput): User
+    addPost(content: String, userId: ID, gameId: ID): Post
+
   }
 
   input ProfileInput {
-    gamerType: String
-    avatar: String
     bio: String
-    games: [GameInput]
-    socialMediaLinks: [SocialMediaInput]
+    socialMediaLinks: SocialMediaInput
   }
 
-  input GameInput {
-    title: String
-    competitive: Boolean
-    rank: String
+  input UserGameInput {
+    gameId: ID
     console: String
     gamingUsername: String
+    competitive: Boolean
+    rank: String
   }
 
   input SocialMediaInput {
