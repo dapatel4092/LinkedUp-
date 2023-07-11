@@ -65,8 +65,11 @@ const resolvers = {
       return { token, user };
         },
 
+    // mutation to add user's profile data.
     addProfile: async (parent, { userId, profileInput}, context) => {
+    // checking if user is logged in  
       if (context.user) {
+
         const profile = await Profile.create(profileInput);
         if (!profile) {
           throw new Error('Something went wrong!');
@@ -74,19 +77,30 @@ const resolvers = {
         const user = await User.findById(userId);
         user.profile.push(profile);
         await user.save();
-        return User.findById(userID).populate('profile');
+        return User.findById(userId).populate('profile');
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-
-         
-    addGameToProfile: async (parent, { userId, game }) => {
+    addGameToProfile: async (parent, { userId, game }, context) => {
       //Will add user inputted game data to their profile
       const user = await User.findById(userId);
       user.profile.games.push(game);
       await user.save();
       return User.findById(userId).populate('profile');
     },
+    addSocialMediaLinks: async (parent, { userId, socialMediaLinks }, context) => {
+      if (context.user) {
+        const user = await User.findById(userId);
+        // Add social media links to their profile
+        user.profile.socialMediaLinks.push(socialMediaLinks);
+        // Save the user
+        await user.save();
+        // Return the updated user with their profile populated
+        return User.findById(userId).populate('profile');
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    
       //Will create a post by specific user and for a specified game
     addPost: async (parent, { content, userId, game }) => {
       const post = await Post.create({ content, user: userId, game });
