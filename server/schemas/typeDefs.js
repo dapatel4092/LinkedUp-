@@ -30,6 +30,13 @@ const typeDefs = gql`
     title: String
   }
 
+  type SocialMedia {
+    facebook: String
+    twitter: String
+    instagram: String
+    snapchat: String
+  }
+
   type Post {
     _id: ID
     content: String
@@ -57,6 +64,7 @@ const typeDefs = gql`
     login(email: String, password: String): Auth
     addGameToProfile(userId: ID, userGame: UserGameInput): User
     addPost(content: String, userId: ID, gameId: ID): Post
+
   }
 
   input ProfileInput {

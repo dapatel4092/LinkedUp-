@@ -137,6 +137,7 @@ const resolvers = {
         return post;
       }
       throw new AuthenticationError('You need to be logged in!');
+
     },
     
   },
