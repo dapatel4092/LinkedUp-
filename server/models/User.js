@@ -4,27 +4,30 @@ const bcrypt = require('bcrypt');
 const userSchema = new Schema({
   username: {
     type: String,
-    required: true,
     unique: true,
-    trim: true,
+    required: true
   },
   email: {
     type: String,
-    required: true,
     unique: true,
-    match: [/.+@.+\..+/, 'Must match an email address!'],
+    required: true
   },
   password: {
     type: String,
-    required: true,
-    minlength: 5,
+    required: true
   },
-  profile: [
+  bio: {
+    type: String,
+  },
+  socialMediaLinks: {
+    type: [String],
+  },
+  userGames: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Profile',
-    },
-  ],
+      ref: 'UserGame'
+    }
+  ]
 });
 
 userSchema.pre('save', async function (next) {
