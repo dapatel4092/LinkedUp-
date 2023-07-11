@@ -12,7 +12,6 @@ const profileSchema = new Schema({
       required: true,
       default: '',
     },
-
     bio: {
         type: String,
         maxlength: 350,

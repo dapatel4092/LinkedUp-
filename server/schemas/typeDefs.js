@@ -12,7 +12,7 @@ const typeDefs = gql`
     _id: ID
     bio: String
     games: [Game]
-    socialMediaLinks: [Link]
+    socialMediaLinks: [String]
   }
 
   type Game {
@@ -46,9 +46,18 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(username: String, email: String, password: String): Auth
+    addProfile(userId: ID!, profileInput: ProfileInput!): User
     login(email: String, password: String): Auth
     addGameToProfile(userId: ID, game: GameInput): User
     addPost(content: String, userId: ID, game: String): Post
+  }
+
+  input ProfileInput {
+    gamerType: String
+    avatar: String
+    bio: String
+    games: [GameInput]
+    socialMediaLinks: [SocialMediaInput]
   }
 
   input GameInput {
@@ -57,6 +66,13 @@ const typeDefs = gql`
     rank: String
     console: String
     gamingUsername: String
+  }
+
+  input SocialMediaInput {
+    facebook: String
+    twitter: String
+    instagram: String
+    snapchat: String
   }
 `;
 

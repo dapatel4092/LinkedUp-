@@ -65,7 +65,21 @@ const resolvers = {
       return { token, user };
         },
 
-    
+    addProfile: async (parent, { userId, profileInput}, context) => {
+      if (context.user) {
+        const profile = await Profile.create(profileInput);
+        if (!profile) {
+          throw new Error('Something went wrong!');
+        }
+        const user = await User.findById(userId);
+        user.profile.push(profile);
+        await user.save();
+        return User.findById(userID).populate('profile');
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+         
     addGameToProfile: async (parent, { userId, game }) => {
       //Will add user inputted game data to their profile
       const user = await User.findById(userId);
