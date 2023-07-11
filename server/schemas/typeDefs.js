@@ -12,6 +12,7 @@ const typeDefs = gql`
     _id: ID
     bio: String
     games: [Game]
+    socialMediaLinks: [Link]
   }
 
   type Game {
@@ -36,6 +37,7 @@ const typeDefs = gql`
   }
 
   type Query {
+    me: User
     users: [User]
     user(userId: ID): User
     usersByGame(gameTitle: String): [User]
