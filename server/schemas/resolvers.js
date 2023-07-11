@@ -4,6 +4,18 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
+    me: async (parent, args, context) => {
+      if (context.user) {
+          //finding user by id using mongoose findOne method
+          const userData = await User.findOne({ _id: context.user._id})
+          //removing password field for security reasons
+          .select('-__v -password')
+          //populating saved books to User profile
+          .populate('profile');
+          return userData
+      }
+      throw new AuthenticationError('You need to be logged in!');
+  },
     //Will gather all user data
     users: async () => {
       return User.find().populate('profile');
@@ -20,38 +32,38 @@ const resolvers = {
     postsByGame: async (parent, { game }) => {
       return Post.find({ game }).populate('user');
     },
-
   },
 
   Mutation: {
-    addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
-      // Create a new Profile for the User
-      const profile = await Profile.create({ bio: "", games: [] });
-      // Attach the Profile to the User
-      user.profile.push(profile);
-      await user.save();
-      const token = signToken(user);
-      return { token, user };
-    },
+    // Mutation for adding a user to db
+        // Takes in username, email, and password as args
+      addUser: async (parent, { username, email, password }) => {
+          const user = await User.create({ username, email, password });
+          if (!user) {
+            throw new AuthenticationError('Something went wrong!');
+          }
+          // sign token and return if sucessful
+          const token = signToken(user);
+          return { token, user };
+        },
 
     login: async (parent, { email, password }) => {
-      //Login function that searched for user by email
       const user = await User.findOne({ email });
-      //Throw error if no email found
+        //generalized error if no user is found
       if (!user) {
         throw new AuthenticationError('Incorrect credentials');
-      }
-      //Using isCorrectPassword method to compare inputted password to save password
+          }
+          // using bcrypts password checking method
       const correctPw = await user.isCorrectPassword(password);
-      //Same error if incorrect password
+    
       if (!correctPw) {
         throw new AuthenticationError('Incorrect credentials');
       }
-      //Return the signed token and user if sucessful
+          
+      //if sucessful login, sign token and return user and token
       const token = signToken(user);
       return { token, user };
-    },
+        },
 
     
     addGameToProfile: async (parent, { userId, game }) => {

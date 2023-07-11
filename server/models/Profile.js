@@ -46,7 +46,8 @@ const profileSchema = new Schema({
     ],
     
     //social media
-    socialMediaLinks: {
+    socialMediaLinks: [
+      {
       facebook: {
         type: String,
         default: '',
@@ -63,7 +64,8 @@ const profileSchema = new Schema({
         type: String,
         default: '',
       },
-    }
+      }
+    ]
 });
 
 const Profile = model('Profile', profileSchema);
