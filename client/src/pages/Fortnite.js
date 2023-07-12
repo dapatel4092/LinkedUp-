@@ -55,7 +55,6 @@ const FortnitepostPage = ({ gameId }) => {
       <h1 style={headingStyle}>Fortnite</h1>
       <p style={pStyle}>FORTNITE!</p>
       <img src="/images/fortnite-image.jpg" alt="Fortnite" />
-      <button>Play Fortnite</button>
     </div>
       <Row>
         <Col>
