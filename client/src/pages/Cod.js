@@ -26,16 +26,32 @@ const CodpostPage = ({ gameId }) => {
   if (error) return <p>Error: {error.message}</p>;
 
   const codStyle = {
-    fontFamily: '',
-    backgroundColor: '',
+    fontFamily: 'Phasmaphobia',
+    backgroundColor: '#0F100B',
+    padding: '20px',
+  };
+
+  const codHead = {
+    color: '#eae7e7',
+    fontSize: '48px',
+    marginBottom: '10px',
+    backgroundColor: '#404622',
+    padding: '20px',
+  };
+
+  const codP = {
+    color: '#eae7e7',
+    fontSize: '24px',
+    marginBottom: '10px',
+    backgroundColor: '#404622',
     padding: '20px',
   };
 
   return (
     <Container>
      <div style={codStyle}>
-      <h1>Call of Duty</h1>
-      <p>Welcome to the Call of Duty page!</p>
+      <h1 style={codHead}>Call of Duty</h1>
+      <p style={codP}>Welcome to the Call of Duty page!</p>
       <img src={``} alt="Call of Duty" />
       <button>Call of Duty</button>
     </div>
