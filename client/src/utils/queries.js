@@ -61,3 +61,17 @@ export const GET_GAMES = gql`
     }
   }
 `;
+
+
+export const GET_POSTS_BY_GAME = gql`
+  query getPostsByGame($gameId: ID!) {
+    postsByGame(gameId: $gameId) {
+      _id
+      content
+      userId {
+        _id
+        username
+      }
+    }
+  }
+`;
