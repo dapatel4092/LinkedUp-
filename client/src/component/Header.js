@@ -40,7 +40,7 @@ const Header = () => {
           </Nav>
           {Auth.loggedIn() ? (
             <Nav>
-              <Nav.Link as={Link} to='/saved'>
+              <Nav.Link as={Link} to='/profile'>
                 Profile
               </Nav.Link>
               <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>

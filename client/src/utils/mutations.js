@@ -27,3 +27,36 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const UPDATE_PROFILE = gql`
+  mutation UpdateProfile($userId: ID!, $profileInput: ProfileInput!) {
+    updateProfile(userId: $userId, profileInput: $profileInput) {
+      _id
+      bio
+      socialMediaLinks {
+        facebook
+        twitter
+        instagram
+        snapchat
+      }
+    }
+  }
+`;
+
+export const ADD_GAME_TO_PROFILE = gql`
+  mutation AddGameToProfile($userId: ID!, $userGame: UserGameInput!) {
+    addGameToProfile(userId: $userId, userGame: $userGame) {
+      _id
+      userGames {
+        game {
+          _id
+          title
+        }
+        console
+        gamingUsername
+        competitive
+        rank
+      }
+    }
+  }
+`;

@@ -14,6 +14,7 @@ import Footer from './component/Footer'
 import Gameselection from './component/Gameselection'
 import HomePage from './component/HomePage';
 import './app.css'
+import Profile from './pages/ProfilePage';
 
 //Setting our graphql uri
 const httpLink = createHttpLink({
@@ -45,6 +46,7 @@ function App() {
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/games' element={<Gameselection />} />
+          <Route path= '/profile' element={<Profile/>} />
           <Route path='*' element={<h1 className='display-2'>Wrong page!</h1>} />
         </Routes>
         <Footer/>
