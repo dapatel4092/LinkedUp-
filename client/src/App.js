@@ -50,7 +50,7 @@ function App() {
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/games' element={<Gameselection />} />
-
+            
           <Route path="/fortnite" element={<Fortnite />} /> {/* Route for Fortnite.js */}
           <Route path="/apex" element={<Apex />} /> {/* Route for Apex.js */}
           <Route path="/cod" element={<Cod />} /> {/* Route for Cod.js */}
