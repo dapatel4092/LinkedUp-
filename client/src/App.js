@@ -13,6 +13,10 @@ import Header from './component/Header';
 import Footer from './component/Footer'
 import Gameselection from './component/Gameselection'
 import HomePage from './component/HomePage';
+import Fortnite from './pages/Fortnite'; // Importing Fortnite.js
+import Apex from './pages/Apex'; // Importing Apex.js
+import Cod from './pages/Cod'; // Importing Cod.js
+import Csgo from './pages/Csgo'; // Importing Csgo.js
 import './app.css'
 
 //Setting our graphql uri
@@ -45,6 +49,10 @@ function App() {
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/games' element={<Gameselection />} />
+          <Route path="/fortnite" element={<Fortnite />} /> {/* Route for Fortnite.js */}
+          <Route path="/apex" element={<Apex />} /> {/* Route for Apex.js */}
+          <Route path="/cod" element={<Cod />} /> {/* Route for Cod.js */}
+          <Route path="/csgo" element={<Csgo />} /> {/* Route for Csgo.js */}
           <Route path='*' element={<h1 className='display-2'>Wrong page!</h1>} />
         </Routes>
         <Footer/>

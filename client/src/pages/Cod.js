@@ -1,0 +1,1 @@
+import Cod from './pages/Cod'; // Importing Cod.js from the "pages" folder
