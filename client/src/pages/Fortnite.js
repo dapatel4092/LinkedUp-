@@ -26,8 +26,7 @@ const FortnitepostPage = ({ gameId }) => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  return (
-    <Container>
+  
     const pageStyle = {
         fontFamily: 'Burbank',
         backgroundColor: '#3d02bd',
@@ -45,7 +44,8 @@ const FortnitepostPage = ({ gameId }) => {
         fontWeight: 'bold',
         marginBottom: '10px'
     }
-  return (
+    return (
+        <Container>
     
     <div style= {pageStyle}>
       <h1 style={headingStyle}>Fortnite</h1>
