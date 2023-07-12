@@ -29,21 +29,25 @@ const FortnitepostPage = ({ gameId }) => {
   
     const pageStyle = {
         fontFamily: 'Burbank',
+        fontWeight: 'bold',
         backgroundColor: '#3d02bd',
         padding: '20px'
     };
     const headingStyle = {
+        backgroundColor: '#2a095f',
         color: '#fbefff',
         fontSize: '48px',
-        fontWeight: 'bold',
         marginBottom: '10px',
+        padding: '20px',
     };
     const pStyle = {
+        backgroundColor: '#3d02bd',
         color: '#e25bff',
         fontSize: '24px',
-        fontWeight: 'bold',
-        marginBottom: '10px'
-    }
+        marginBottom: '10px',
+        padding: '20px',
+    };
+
     return (
         <Container>
     

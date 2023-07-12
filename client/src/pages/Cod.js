@@ -25,9 +25,15 @@ const CodpostPage = ({ gameId }) => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
+  const codStyle = {
+    fontFamily: '',
+    backgroundColor: '',
+    padding: '20px',
+  };
+
   return (
     <Container>
-     <div>
+     <div style={codStyle}>
       <h1>Call of Duty</h1>
       <p>Welcome to the Call of Duty page!</p>
       <img src={``} alt="Call of Duty" />
