@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_POSTS_BY_GAME, ADD_POST } from '../utils/queries';
+import { GET_POSTS_BY_GAME,  } from '../utils/queries';
 import { Container, Row, Col } from 'react-bootstrap';
+import {ADD_POST} from '../utils/mutations';
 
 import PostList from '../component/Postlist';
 import NewPostForm from '../component/NewPostform';
@@ -26,32 +27,35 @@ const FortnitepostPage = ({ gameId }) => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  return (
-    <Container>
+  
     const pageStyle = {
         fontFamily: 'Burbank',
+        fontWeight: 'bold',
         backgroundColor: '#3d02bd',
         padding: '20px'
     };
     const headingStyle = {
+        backgroundColor: '#2a095f',
         color: '#fbefff',
         fontSize: '48px',
-        fontWeight: 'bold',
         marginBottom: '10px',
+        padding: '20px',
     };
     const pStyle = {
+        backgroundColor: '#3d02bd',
         color: '#e25bff',
         fontSize: '24px',
-        fontWeight: 'bold',
-        marginBottom: '10px'
-    }
-  return (
+        marginBottom: '10px',
+        padding: '20px',
+    };
+
+    return (
+        <Container>
     
     <div style= {pageStyle}>
       <h1 style={headingStyle}>Fortnite</h1>
       <p style={pStyle}>FORTNITE!</p>
       <img src="/images/fortnite-image.jpg" alt="Fortnite" />
-      <button>Play Fortnite</button>
     </div>
       <Row>
         <Col>

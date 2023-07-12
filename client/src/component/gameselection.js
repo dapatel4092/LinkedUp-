@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 
 
 
+
 const Gameselection = () => {
     const [Games]=useState(GamesData)
     return(<>
@@ -22,7 +23,7 @@ const Gameselection = () => {
              {projectElement.description}
             </Card.Text>
             <Card.Footer>
-            <Button variant="primary"><a className="text-white" href={projectElement.live}>Connect now!</a></Button>
+            <Button variant="primary"><a className="text-white" href={projectElement.Connect}>Connect now!</a></Button>
   
             </Card.Footer>
           </Card.Body>
