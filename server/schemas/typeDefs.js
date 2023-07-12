@@ -35,8 +35,8 @@ type User {
     _id: ID
     content: String
     createdAt: String
-    user: User
-    game: Game
+    userId: User
+    gameId: Game
   }
 
   type Auth {
