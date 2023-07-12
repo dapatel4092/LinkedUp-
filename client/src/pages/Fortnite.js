@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_POSTS_BY_GAME, ADD_POST } from '../utils/queries';
+import { GET_POSTS_BY_GAME,  } from '../utils/queries';
 import { Container, Row, Col } from 'react-bootstrap';
+import {ADD_POST} from '../utils/mutations';
 
 import PostList from '../component/Postlist';
 import NewPostForm from '../component/NewPostform';
@@ -26,8 +27,7 @@ const FortnitepostPage = ({ gameId }) => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  return (
-    <Container>
+  
     const pageStyle = {
         fontFamily: 'Burbank',
         backgroundColor: '#3d02bd',
@@ -45,7 +45,8 @@ const FortnitepostPage = ({ gameId }) => {
         fontWeight: 'bold',
         marginBottom: '10px'
     }
-  return (
+    return (
+        <Container>
     
     <div style= {pageStyle}>
       <h1 style={headingStyle}>Fortnite</h1>

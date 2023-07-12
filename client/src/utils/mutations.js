@@ -60,3 +60,15 @@ export const ADD_GAME_TO_PROFILE = gql`
     }
   }
 `;
+export const ADD_POST = gql `
+  mutation addPost($content: String!, $gameId: ID!) {
+    addPost(content: $content, gameId: $gameId) {
+      _id
+      content
+      userId {
+        _id
+        username
+      }
+    }
+  }
+`;
