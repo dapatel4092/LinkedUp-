@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, UserGame, Post } = require('../models');
+const { User, UserGame, Post, Game } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -42,6 +42,10 @@ const resolvers = {
         },
       });
     },
+    games: async () => {
+      const games = await Game.find();
+      return games;
+  },
     //Query that will return all users that play a specific
     usersByGame: async (parent, { gameId }) => {
       return User.find({ 'userGames.game': gameId }).populate({
@@ -100,30 +104,29 @@ const resolvers = {
     //checking if user is logged in
 
     addGameToProfile: async (parent, { userId, userGame }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError('You need to be logged in!');
-      }
-      if (context.user._id !== userId) {
-        throw new AuthenticationError('You can only modify your own profile!');
-      }
-      //creating a new user game instance taking in one of our pre
-      const newUserGame = { ...userGame, game: userGame.gameId, user: userId };
-      const userGameObj = await UserGame.create(newUserGame);
-      //updating user with this new game 
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: userId },
-        { $push: { userGames: userGameObj._id } },
-        { new: true }
-      ).populate({
-        path: 'userGames',
-        populate: {
-          path: 'game',
-          model: 'Game',
-        },
-      });
+       // checks that the user is modifying their own profile
+      if (context.user && context.user._id == userId) {
+        const newUserGame = new UserGame({
+          user: context.user._id,
+          game: userGame.gameId,
+          competitive: userGame.competitive,
+          rank: userGame.rank,
+          console: userGame.console,
+          gamingUsername: userGame.gamingUsername
+        });
     
-      return updatedUser;
+        await newUserGame.save();
+    
+        return await User.findByIdAndUpdate(
+          context.user._id,
+          { $push: { userGames: newUserGame._id } },
+          { new: true }
+        ).populate('userGames');
+      }
+    
+      throw new AuthenticationError('You need to be logged in!');
     },
+    
     // adding a post to a specific game's page
     addPost: async (parent, { content, userId, gameId }, context) => {
       //

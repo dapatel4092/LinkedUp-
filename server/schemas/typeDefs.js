@@ -46,6 +46,7 @@ type User {
 
   type Query {
     me: User
+    games: [Game]
     users: [User]
     user(userId: ID): User
     usersByGame(gameId: ID): [User]
@@ -56,7 +57,7 @@ type User {
     addUser(username: String, email: String, password: String): Auth
     updateProfile(userId: ID!, profileInput: ProfileInput!): User
     login(email: String, password: String): Auth
-    addGameToProfile(userId: ID, userGame: UserGameInput): User
+    addGameToProfile(userId: ID!, userGame: UserGameInput!): User
     addPost(content: String, userId: ID, gameId: ID): Post
 
   }
