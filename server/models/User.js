@@ -20,8 +20,12 @@ const userSchema = new Schema({
     type: String,
   },
   socialMediaLinks: {
-    type: [String],
+    facebook: String,
+    twitter: String,
+    instagram: String,
+    snapchat: String,
   },
+
   userGames: [
     {
       type: Schema.Types.ObjectId,
