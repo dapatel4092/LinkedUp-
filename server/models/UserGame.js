@@ -17,7 +17,7 @@ const userGameSchema = new Schema({
     rank: {
         type: String,
     }, 
-    consoles: {
+    console: {
         type: String,
         required: true,
         trim: true

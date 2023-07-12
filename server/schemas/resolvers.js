@@ -3,88 +3,83 @@ const { User, UserGame, Post } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
-  // Query to find a logged in user
   Query: {
+    // query to retrieve a logged in user
     me: async (parent, args, context) => {
-      // checking for authentication and getting user by id
       if (context.user) {
-          const userData = await User.findOne({ _id: context.user._id})
-          //removing password field from query for security
+        const userData = await User.findOne({ _id: context.user._id })
+        // not including password for security
           .select('-__v -password')
-          //populating a user's games into the model
+          //populating users games into profile
           .populate({
-            path: 'games',
+            path: 'userGames',
             populate: {
               path: 'game',
-              model: 'Game'
-            }
+              model: 'Game',
+            },
           });
-          return userData
+        return userData;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    //query to get all users and populating their games
+    //Query to get all users back
     users: async () => {
-      return User.find()
-        .populate({
-          path: 'games',
-          populate: {
-            path: 'game',
-            model: 'Game'
-          }
-        });
+      return User.find().populate({
+        path: 'userGames',
+        populate: {
+          path: 'game',
+          model: 'Game',
+        },
+      });
     },
-    //query to get a single user by userId
+    //Query to get a single user by id
     user: async (parent, { userId }) => {
-      return User.findById(userId)
-        .populate({
-          path: 'games',
-          populate: {
-            path: 'game',
-            model: 'Game'
-          }
-        });
+      return User.findById(userId).populate({
+        path: 'userGames',
+        populate: {
+          path: 'game',
+          model: 'Game',
+        },
+      });
     },
-    // query that will search for all users who play a specified game
+    //Query that will return all users that play a specific
     usersByGame: async (parent, { gameId }) => {
-      return User.find({ "games.game": gameId })
-        .populate({
-          path: 'games',
-          populate: {
-            path: 'game',
-            model: 'Game'
-          }
-        });
+      return User.find({ 'userGames.game': gameId }).populate({
+        path: 'userGames',
+        populate: {
+          path: 'game',
+          model: 'Game',
+        },
+      });
     },
-    // query that will get all posts made to a particular game
+    // Query to get all posts for a particular game
     postsByGame: async (parent, { gameId }) => {
-      return Post.find({ game: gameId })
-        .populate('user')
-        .populate('game');
-    },
+      return Post.find({ gameId: gameId }).populate('userId').populate('gameId');
+    }
   },
 
   Mutation: {
-    //mutation to add a new user
-    //takes in username, email, and password as required args
+  //Mutation to add a new user
+  //Takes in a username, email, password as args
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       if (!user) {
         throw new AuthenticationError('Something went wrong!');
       }
-      //signing authenication token upon sucess
+      //Return the new user with token
       const token = signToken(user);
       return { token, user };
     },
-    // query to login a user
-    // takes in email and password as args
+
+  //Mutation to log in a user
+  //only takes in email and password as args
     login: async (parent, { email, password }) => {
-      //using findOne method to find matching email
+      //searching for user by email
       const user = await User.findOne({ email });
       if (!user) {
         throw new AuthenticationError('Incorrect credentials');
       }
-      //using bcrypt isCorrectPassword function to compare input password to hashed database password
+      // using bcrypt isCorrectPassord method to compare input password to hashed password
       const correctPw = await user.isCorrectPassword(password);
       if (!correctPw) {
         throw new AuthenticationError('Incorrect credentials');
@@ -92,55 +87,65 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    // mutation to add profile dada to user 
-    //requiring user to be authenticated before submitting
+    // mutation to update a users profile information after creation
     updateProfile: async (parent, { userId, profileInput }, context) => {
       if (context.user) {
-        // using mongoose findByIdandUpdate method to search by userId
-        //takes in profileInput field as data to be updated and returns a new verion of the data
+        // searching for user by id, and updating their profileInut info, then returning a new copy of user
         const updatedUser = await User.findByIdAndUpdate(userId, profileInput, { new: true });
         return updatedUser;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    // mutation to add a game to user profile
-    addGameToProfile: async (parent, { userId, gameInput }, context) => {
-      // Make sure the user is logged in
+    //mutation to add a game to a user's profile
+    //checking if user is logged in
+
+    addGameToProfile: async (parent, { userId, userGame }, context) => {
       if (!context.user) {
         throw new AuthenticationError('You need to be logged in!');
       }
-      // Check if the authenticated user matches the provided userId
       if (context.user._id !== userId) {
         throw new AuthenticationError('You can only modify your own profile!');
       }
-      //taking in the gameInput arguments and updating it to the user's profile
-      const userGame = await UserGame.create({ ...gameInput, game: gameInput.gameId, user: userId });
+      //creating a new user game instance taking in one of our pre
+      const newUserGame = { ...userGame, game: userGame.gameId, user: userId };
+      const userGameObj = await UserGame.create(newUserGame);
+      //updating user with this new game 
       const updatedUser = await User.findOneAndUpdate(
-        // pushing the userGame into their games array
         { _id: userId },
-        { $push: { games: userGame._id } },
-        // returning an updated copy of the user
+        { $push: { userGames: userGameObj._id } },
         { new: true }
       ).populate({
-        path: 'games',
-        populate: 'game'
+        path: 'userGames',
+        populate: {
+          path: 'game',
+          model: 'Game',
+        },
       });
     
       return updatedUser;
     },
-    //mutation to add a post to a game page
-    addPost: async (parent, { content, game }, context) => {
-    //ensure user is logged in before posting
+    // adding a post to a specific game's page
+    addPost: async (parent, { content, userId, gameId }, context) => {
+      //
       if (context.user) {
-        // create a new post to the game
-        const post = await Post.create({ content, user: context.user._id, game });
-        return post;
+        
+        const post = await Post.create({ content, userId: userId, gameId: gameId });
+        const populatedPost = await Post.findById(post._id).populate('userId');
+        // 
+        return {
+          _id: populatedPost._id,
+          content: populatedPost.content,
+          createdAt: populatedPost.createdAt,
+          user: populatedPost.userId, 
+          game: populatedPost.gameId,
+        };
       }
       throw new AuthenticationError('You need to be logged in!');
-
-    },
+    }
+    
+    
     
   },
-}
+};
 
 module.exports = resolvers;
