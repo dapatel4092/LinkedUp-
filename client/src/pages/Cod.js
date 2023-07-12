@@ -32,7 +32,7 @@ const CodpostPage = ({ gameId }) => {
   };
 
   const codHead = {
-    color: '#eae7e7',
+    color: '#FCFCFC',
     fontSize: '48px',
     marginBottom: '10px',
     backgroundColor: '#404622',
@@ -40,7 +40,7 @@ const CodpostPage = ({ gameId }) => {
   };
 
   const codP = {
-    color: '#eae7e7',
+    color: '#FCFCFC',
     fontSize: '24px',
     marginBottom: '10px',
     backgroundColor: '#404622',
@@ -53,7 +53,6 @@ const CodpostPage = ({ gameId }) => {
       <h1 style={codHead}>Call of Duty</h1>
       <p style={codP}>Welcome to the Call of Duty page!</p>
       <img src={``} alt="Call of Duty" />
-      <button>Call of Duty</button>
     </div>
       <Row>
         <Col>
