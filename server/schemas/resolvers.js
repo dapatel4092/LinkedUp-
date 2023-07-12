@@ -58,7 +58,16 @@ const resolvers = {
     },
     // Query to get all posts for a particular game
     postsByGame: async (parent, { gameId }) => {
-      return Post.find({ gameId: gameId }).populate('userId').populate('gameId');
+      return Post.find({ gameId: gameId })
+        .populate({
+          path: 'userId',
+          model: 'User',
+          select: '-__v -password',
+        })
+        .populate({
+          path: 'gameId',
+          model: 'Game',
+        });
     }
   },
 
@@ -129,19 +138,20 @@ const resolvers = {
     
     // adding a post to a specific game's page
     addPost: async (parent, { content, userId, gameId }, context) => {
-      //
       if (context.user) {
-        
         const post = await Post.create({ content, userId: userId, gameId: gameId });
-        const populatedPost = await Post.findById(post._id).populate('userId');
-        // 
-        return {
-          _id: populatedPost._id,
-          content: populatedPost.content,
-          createdAt: populatedPost.createdAt,
-          user: populatedPost.userId, 
-          game: populatedPost.gameId,
-        };
+        const populatedPost = await Post.findById(post._id)
+          .populate({
+            path: 'userId',
+            model: 'User',
+            select: '-__v -password',
+          })
+          .populate({
+            path: 'gameId',
+            model: 'Game',
+          });
+    
+        return populatedPost;
       }
       throw new AuthenticationError('You need to be logged in!');
     }
