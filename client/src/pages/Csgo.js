@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_POSTS_BY_GAME, ADD_POST } from '../utils/queries';
@@ -27,6 +28,12 @@ const CsgopostPage = ({ gameId }) => {
 
   return (
     <Container>
+      <div>
+      <h1>Counter-Strike: Global Offensive</h1>
+      <p>Welcome to the Counter-Strike: Global Offensive page!</p>
+      <img src="/images/csgo-image.jpg" alt="CSGO" />
+      <button>Play CSGO</button>
+    </div>
       <Row>
         <Col>
           <PostList posts={data.postsByGame} />
@@ -42,3 +49,4 @@ const CsgopostPage = ({ gameId }) => {
 };
 
 export default CsgopostPage;
+

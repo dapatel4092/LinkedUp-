@@ -17,8 +17,9 @@ import Fortnite from './pages/Fortnite'; // Importing Fortnite.js
 import Apex from './pages/Apex'; // Importing Apex.js
 import Cod from './pages/Cod'; // Importing Cod.js
 import Csgo from './pages/Csgo'; // Importing Csgo.js
-import './app.css'
 import Profile from './pages/ProfilePage';
+import './app.css'
+
 
 //Setting our graphql uri
 const httpLink = createHttpLink({
@@ -50,7 +51,9 @@ function App() {
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/games' element={<Gameselection />} />
-            
+
+          <Route path='/profile' element={<Profile />} />
+
           <Route path="/fortnite" element={<Fortnite />} /> {/* Route for Fortnite.js */}
           <Route path="/apex" element={<Apex />} /> {/* Route for Apex.js */}
           <Route path="/cod" element={<Cod />} /> {/* Route for Cod.js */}
