@@ -1,4 +1,4 @@
-// importing all packages needed for apollo to run
+// importing all packages needed for apollo client to run
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -8,6 +8,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+// We will be using react-router to navigate pages
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './component/Header';
 import Footer from './component/Footer'
@@ -52,10 +53,10 @@ function App() {
           <Route path='/' element={<HomePage />} />
           <Route path='/games' element={<Gameselection />} />
           <Route path='/profile' element={<Profile />} />
-          <Route path="/fortnite" element={<Fortnite />} /> {/* Route for Fortnite.js */}
-          <Route path="/apex" element={<Apex />} /> {/* Route for Apex.js */}
-          <Route path="/cod" element={<Cod />} /> {/* Route for Cod.js */}
-          <Route path="/csgo" element={<Csgo />} /> {/* Route for Csgo.js */}
+          <Route path="/fortnite" element={<Fortnite />} /> 
+          <Route path="/apex" element={<Apex />} /> 
+          <Route path="/cod" element={<Cod />} />
+          <Route path="/csgo" element={<Csgo />} /> 
 
           <Route path='*' element={<h1 className='display-2'>Wrong page!</h1>} />
         </Routes>

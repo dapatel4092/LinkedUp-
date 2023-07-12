@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-//importing GraphQL mutation
+//importing GraphQL mutation to add a user
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
+// importing our auth funcitonality
 import Auth from '../utils/auth';
 
 const Signup = () => {
-  // set initial form state
+  // set initial form state as empty
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
   // set state for form validation
   const [validated] = useState(false);
@@ -22,6 +23,7 @@ const Signup = () => {
       setShowAlert(false);
     }
   }, [error]);
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
@@ -36,9 +38,8 @@ const Signup = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-    // Replaced RESTful addUser function with addUser GQL mutation
     try {
-
+      //calling our addUser mutation
       const { data } = await addUser({
         //taking in userFormData as variable for our mutation
         variables: { ...userFormData },
@@ -58,11 +59,11 @@ const Signup = () => {
     });
   };
 
+    //Actual component for rendering signup
+    // Will store all user input data and add a new User
   return (
     <>
-      {/* This is needed for the validation functionality above */}
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
-        {/* show alert if server response is bad */}
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
           Something went wrong with your signup!
         </Alert>

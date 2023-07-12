@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Game = require('../models/Game');
-
+// one time seed file to get our Games the user can choose populated to the database
 const games = [
     { title: 'Apex Legends' },
     { title: 'Call of Duty' },

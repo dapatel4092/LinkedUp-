@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
 // Home page for our site
+// Just acts as a sort of main page
 const HomePage = () => {
   return (
     <Container fluid className="d-flex justify-content-center" style={{ minHeight: '100vh', paddingTop: '20px' }}>

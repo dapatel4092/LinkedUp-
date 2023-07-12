@@ -1,6 +1,10 @@
 import { gql } from '@apollo/client';
 
-//Client side queries
+
+//Client side queries that will be used inside of our components
+
+//Queries were tested in Apollo playground
+
 export const GET_USER = gql`
   query getUser($userId: ID!) {
     user(userId: $userId) {
