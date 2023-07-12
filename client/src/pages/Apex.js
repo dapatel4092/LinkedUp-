@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_POSTS_BY_GAME, ADD_POST } from '../utils/queries';
+import { GET_POSTS_BY_GAME } from '../utils/queries';
 import { Container, Row, Col } from 'react-bootstrap';
 
 import PostList from '../component/Postlist';
