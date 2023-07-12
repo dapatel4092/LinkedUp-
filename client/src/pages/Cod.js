@@ -27,6 +27,12 @@ const CodpostPage = ({ gameId }) => {
 
   return (
     <Container>
+     <div>
+      <h1>Call of Duty</h1>
+      <p>Welcome to the Call of Duty page!</p>
+      <img src={``} alt="Call of Duty" />
+      <button>Call of Duty</button>
+    </div>
       <Row>
         <Col>
           <PostList posts={data.postsByGame} />
@@ -42,3 +48,4 @@ const CodpostPage = ({ gameId }) => {
 };
 
 export default CodpostPage;
+
