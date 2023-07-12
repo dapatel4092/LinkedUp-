@@ -4,11 +4,14 @@ import { Navbar, Nav, Container, Button, Modal } from 'react-bootstrap';
 import SignUp from './Signup';
 import Login from './Login';
 import Auth from '../utils/auth';
-
+//Header page acts as our main form of navigation throughout the site
 const Header = () => {
+  //we will be using modals for both out signiup and login
+  //setting their intial state to false until needed
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
 
+  //changing state of modals
   const handleLoginModalClose = () => {
     setShowLoginModal(false);
   };
@@ -25,10 +28,11 @@ const Header = () => {
     setShowSignupModal(true);
   };
 
+  //Our actual navbar component with conditional rendering depending on the users logged in state
   return (
-    <Navbar bg='dark' variant='dark' expand='lg' className='mb-4'>
+    <Navbar bg='dark' variant='dark' expand='lg' className='mb-4'style={{ height: '150px' }}>
       <Container>
-        <Navbar.Brand as={Link} to='/' className='display-4'>
+        <Navbar.Brand as={Link} to='/' className='display-4'style={{ 'font-size': '36px' }}>
           LinkedUp
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='navbar' />
@@ -47,10 +51,10 @@ const Header = () => {
             </Nav>
           ) : (
             <>
-              <Button variant='light' onClick={handleLoginModalOpen} className='authButton'>
+              <Button variant='primary' onClick={handleLoginModalOpen} className='authButton' style={{ 'margin-left': '10px' }}>
                 Login
               </Button>
-              <Button variant='light' onClick={handleSignupModalOpen} className='authButton'>
+              <Button variant='info' onClick={handleSignupModalOpen} className='authButton' style={{ 'margin-left': '10px'}}>
                 Sign Up
               </Button>
             </>

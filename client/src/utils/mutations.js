@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client';
 
-//Client side mutations
+//Client side mutations that will be used inside of our components
+//Mutattions were tested in Apollo playground
 
 export const ADD_USER = gql`
   mutation addUser($username: String!, $email: String!, $password: String!) {

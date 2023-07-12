@@ -7,7 +7,7 @@ const Footer = () => {
       <Container>
         <Row>
           <Col md={6} className="text-center text-md-start">
-            <p>&copy; 2023 Your Company. All rights reserved.</p>
+            <p>&copy; 2023 Josh S, Megan G, Dhruv P, Alex W</p>
           </Col>
           <Col md={6} className="text-center text-md-end">
             <ul className="list-inline">
@@ -18,7 +18,7 @@ const Footer = () => {
                 <a href="/about">About</a>
               </li>
               <li className="list-inline-item">
-                <a href="/contact">Contact us</a>
+                <a href='https://github.com/dapatel4092/LinkedUp-'m>Contact us</a>
               </li>
             </ul>
           </Col>

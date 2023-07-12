@@ -5,6 +5,7 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
   Query: {
     // query to retrieve a logged in user
+    // This will be crucial for allowing us to view and manipulate logged in user data
     me: async (parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id })
@@ -23,6 +24,7 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     //Query to get all users back
+    // So far used for debugging
     users: async () => {
       return User.find().populate({
         path: 'userGames',
@@ -33,6 +35,7 @@ const resolvers = {
       });
     },
     //Query to get a single user by id
+    //Will be used to connect a to a users profile page
     user: async (parent, { userId }) => {
       return User.findById(userId).populate({
         path: 'userGames',
@@ -42,11 +45,14 @@ const resolvers = {
         },
       });
     },
+    //Query that will return all games from our game model
+    // This will be used as our games are pre-seeded
     games: async () => {
       const games = await Game.find();
       return games;
   },
-    //Query that will return all users that play a specific
+    //Query that will return all users that play a specific game
+    //Still don't know if we have a need for this just yet
     usersByGame: async (parent, { gameId }) => {
       return User.find({ 'userGames.game': gameId }).populate({
         path: 'userGames',
@@ -57,8 +63,10 @@ const resolvers = {
       });
     },
     // Query to get all posts for a particular game
+    //This will be used for each game's page to display posts.
     postsByGame: async (parent, { gameId }) => {
       return Post.find({ gameId: gameId })
+      //Populating the users and the games that are associated with the post
         .populate({
           path: 'userId',
           model: 'User',
@@ -116,6 +124,7 @@ const resolvers = {
        // checks that the user is modifying their own profile
       if (context.user && context.user._id == userId) {
         const newUserGame = new UserGame({
+          //All of the information our form will take in for a single user game
           user: context.user._id,
           game: userGame.gameId,
           competitive: userGame.competitive,
@@ -127,8 +136,11 @@ const resolvers = {
         await newUserGame.save();
     
         return await User.findByIdAndUpdate(
+          //gathering the proper user to add the game to by id
           context.user._id,
+          //using mongoose push method to add newUser game to userGames array
           { $push: { userGames: newUserGame._id } },
+          //returning new copy of data
           { new: true }
         ).populate('userGames');
       }
@@ -139,8 +151,11 @@ const resolvers = {
     // adding a post to a specific game's page
     addPost: async (parent, { content, userId, gameId }, context) => {
       if (context.user) {
+        //Creating a new post using the post model and taking in a single user and game.
         const post = await Post.create({ content, userId: userId, gameId: gameId });
+        //Gathering this new post to return
         const populatedPost = await Post.findById(post._id)
+        //populating user and game data to relate a post to these.
           .populate({
             path: 'userId',
             model: 'User',
@@ -155,9 +170,6 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     }
-    
-    
-    
   },
 };
 

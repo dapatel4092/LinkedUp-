@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
+//importing GET_ME mutation to get logged in user
 import { GET_ME } from '../utils/queries';
+//importing mutations to update profile info and add a game to a profile
 import { UPDATE_PROFILE, ADD_GAME_TO_PROFILE } from '../utils/mutations';
 import GamesDropdown from '../component/GamesDropdown';
 
+
+//Profile page will allow user to add and change personal information about themselves
 const Profile = () => {
+  //Query the user
   const { loading, error, data } = useQuery(GET_ME);
+  //profile mutations
   const [updateProfile] = useMutation(UPDATE_PROFILE);
   const [addGameToProfile] = useMutation(ADD_GAME_TO_PROFILE);
-
+//Starting with empty inputs
   const [profileInput, setProfileInput] = useState({
     bio: '',
     socialMediaLinks: {
@@ -18,7 +24,7 @@ const Profile = () => {
       snapchat: '',
     },
   });
-
+//setting initial empty game inputs
   const [gameInput, setGameInput] = useState({
     gameId: '',
     console: '',
@@ -26,7 +32,8 @@ const Profile = () => {
     competitive: false,
     rank: '',
   });
-
+//Handler that will update the user's bio information
+//setting the value of the data to the user input
   const handleBioChange = (event) => {
     const { value } = event.target;
     setProfileInput({
@@ -34,7 +41,7 @@ const Profile = () => {
       bio: value,
     });
   };
-
+//handler that will update a user's social media links
   const handleSocialMediaLinkChange = (platform) => (event) => {
     const { value } = event.target;
     setProfileInput({
@@ -45,7 +52,7 @@ const Profile = () => {
       },
     });
   };
-
+//handler that will handle a user's added game
   const handleGameChange = (event) => {
     const { name, value } = event.target;
     setGameInput({
@@ -53,7 +60,7 @@ const Profile = () => {
       [name]: value,
     });
   };
-
+//hanlder to change competitive status
   const handleCompetitiveChange = (event) => {
     const { checked } = event.target;
     setGameInput({
@@ -61,20 +68,22 @@ const Profile = () => {
       competitive: checked,
     });
   };
-
+//profile submit handler
   const handleProfileSubmit = async (event) => {
     event.preventDefault();
     try {
+      //runs our update profile mutation with user input data
       const response = await updateProfile({ variables: { userId: data.me._id, profileInput } });
       console.log(response);
     } catch (err) {
       console.error(err);
     }
   };
-
+//game submit handler
   const handleGameSubmit = async (event) => {
     event.preventDefault();
     try {
+      //runs addGameToProfile mutation with user input data
       const response = await addGameToProfile({ variables: { userId: data.me._id, userGame: gameInput } });
       console.log(response);
     } catch (err) {
@@ -86,7 +95,7 @@ const Profile = () => {
   if (error) return <div>Error! {error.message}</div>;
 
   const { username, bio, socialMediaLinks, userGames } = data.me;
-
+//Render component that displays all forms, buttons, and state/ mutation functionallity
   return (
     <div className="container">
       <h1>Welcome, {username}!</h1>
@@ -130,12 +139,10 @@ const Profile = () => {
             <div className="card-body">
               <h2 className="card-title">Update Profile</h2>
               <form onSubmit={handleProfileSubmit}>
-                {/* Profile input fields */}
                 <div className="form-group">
                   <label>Bio</label>
                   <textarea className="form-control" name="bio" value={profileInput.bio} onChange={handleBioChange} />
                 </div>
-                {/* Fields for social media links */}
                 <div className="form-group">
                   <label>Facebook</label>
                   <input className="form-control" name="facebook" value={profileInput.socialMediaLinks.facebook} onChange={handleSocialMediaLinkChange('facebook')} />

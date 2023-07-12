@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-
+//UserGame is a schema that will store individual games to a user's profile
 const userGameSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
