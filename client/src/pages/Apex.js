@@ -1,0 +1,1 @@
+import Apex from './pages/Apex'; // Importing Apex.js from the "pages" folder
