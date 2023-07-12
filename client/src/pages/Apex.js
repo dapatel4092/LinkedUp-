@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_POSTS_BY_GAME, ADD_POST } from '../utils/queries';
@@ -26,7 +27,13 @@ const ApexpostPage = ({ gameId }) => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <Container>
+     <Container>
+     <div>
+      <h1>Apex Legends</h1>
+      <p>Welcome to the Apex Legends page!</p>
+      <img src="/images/apex-image.jpg" alt="Apex Legends" />
+      <video src="/videos/apex-trailer.mp4" controls />
+    </div>
       <Row>
         <Col>
           <PostList posts={data.postsByGame} />
@@ -42,5 +49,6 @@ const ApexpostPage = ({ gameId }) => {
 };
 
 export default ApexpostPage;
+
 
 

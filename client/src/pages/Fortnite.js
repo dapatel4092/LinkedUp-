@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_POSTS_BY_GAME, ADD_POST } from '../utils/queries';
@@ -27,6 +28,31 @@ const FortnitepostPage = ({ gameId }) => {
 
   return (
     <Container>
+    const pageStyle = {
+        fontFamily: 'Burbank',
+        backgroundColor: '#3d02bd',
+        padding: '20px'
+    };
+    const headingStyle = {
+        color: '#fbefff',
+        fontSize: '48px',
+        fontWeight: 'bold',
+        marginBottom: '10px',
+    };
+    const pStyle = {
+        color: '#e25bff',
+        fontSize: '24px',
+        fontWeight: 'bold',
+        marginBottom: '10px'
+    }
+  return (
+    
+    <div style= {pageStyle}>
+      <h1 style={headingStyle}>Fortnite</h1>
+      <p style={pStyle}>FORTNITE!</p>
+      <img src="/images/fortnite-image.jpg" alt="Fortnite" />
+      <button>Play Fortnite</button>
+    </div>
       <Row>
         <Col>
           <PostList posts={data.postsByGame} />
@@ -42,3 +68,4 @@ const FortnitepostPage = ({ gameId }) => {
 };
 
 export default FortnitepostPage;
+
