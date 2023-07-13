@@ -13,8 +13,13 @@ Our application allows Users to create a profile Displaying GamerTags, Social me
 <li>GraphQL<li\>
 <li>Node<li\>
 
+## Images 
+![screenshot of Welcome Page ](./client/public/pictures/Screenshot%202023-07-12%20175117.png)
+![screenshot of the Sign In Page](./client/public/pictures/Screenshot%202023-07-12%20175251.png)
+![screenshot of the Profile Page](./client/public/pictures/Screenshot%202023-07-12%20175241.png)
+![screenshot of the Game selection Page](./client/public/pictures/Screenshot%202023-07-12%20175225.png)
 ## Website Link 
-
+<li>https://agile-ridge-91799-160d7345b56c.herokuapp.com/<li\>
 
 ## Github Repository
-
+<li>https://github.com/dapatel4092/LinkedUp-<li\>
